@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-09-04T05:43:28.665081Z",
+  "patrols": {
+    "total": 20,
+    "on_patrol": 18,
+    "responding": 0,
+    "at_scene": 1,
+    "returning": 1
+  },
+  "officers_available": 18,
+  "officers_on_duty": 20,
+  "incidents": {
+    "active_total": 1,
+    "awaiting": 0,
+    "dispatched": 0,
+    "on_scene": 1
+  },
+  "resolved_today": 4,
+  "cancelled_today": 0,
+  "high_risk_zones": [
+    {
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "safety_score": 14,
+      "risk_level": "HIGH"
+    },
+    {
+      "pincode": "600021",
+      "zone_name": "Kodungaiyur",
+      "safety_score": 23,
+      "risk_level": "HIGH"
+    },
+    {
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "safety_score": 32,
+      "risk_level": "HIGH"
+    },
+    {
+      "pincode": "600007",
+      "zone_name": "Vepery",
+      "safety_score": 32,
+      "risk_level": "HIGH"
+    },
+    {
+      "pincode": "600058",
+      "zone_name": "Tondiarpet",
+      "safety_score": 33,
+      "risk_level": "HIGH"
+    }
+  ],
+  "active_incident_ids": [
+    "SOS-3497369C"
+  ]
+}

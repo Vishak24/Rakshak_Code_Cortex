@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-09-04T05:43:28.665670Z",
+  "zone_count": 44,
+  "zones": [
+    {
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "lat": 13.0827,
+      "lng": 80.2707,
+      "safety_score": 32,
+      "risk_level": "HIGH",
+      "incidents_today": 1,
+      "active_incidents": 0,
+      "source": "baseline"
+    },
+    {
+      "pincode": "600002",
+      "zone_name": "Anna Salai",
+      "lat": 13.0878,
+      "lng": 80.2785,
+      "safety_score": 45,
+      "risk_level": "MEDIUM",
+      "incidents_today": 0,
+      "active_incidents": 0,
+      "source": "baseline"
+    },
+    {
+      "pincode": "600003",
+      "zone_name": "Park Town",
+      "lat": 13.095,
+      "lng": 80.2866,
+      "safety_score": 42,
+      "risk_level": "MEDIUM",
+      "incidents_today": 0,
+      "active_incidents": 0,
+      "source": "baseline"
+    },
+    {
+      "pincode": "600004",
+      "zone_name": "Mylapore",
+      "lat": 13.0339,
+      "lng": 80.2619,
+      "safety_score": 60,
+      "risk_level": "MEDIUM",
+      "incidents_today": 0,
+      "active_incidents": 0,
+      "source": "baseline"
+    },
+    {
+      "pincode": "600005",
+      "zone_name": "Triplicane",
+      "lat": 13.0569,
+      "lng": 80.2787,
+      "safety_score": 48,
+      "risk_level": "MEDIUM",
+      "incidents_today": 0,
+      "active_incidents": 0,
+      "source": "baseline"
+    },
+    {
+      "pincode": "600006",
+      "zone_name": "Nungambakkam",
+      "lat": 13.0604,
+      "lng": 80.2495,
+      "safety_score": 67,
+      "risk_level": "MEDIUM",
+      "incidents_today": 0,
+      "active_incidents": 0,
+      "source": "baseline"
+    }
+  ]
+}

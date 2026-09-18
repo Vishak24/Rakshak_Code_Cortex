@@ -1,0 +1,343 @@
+[
+  {
+    "patrol_id": "P001",
+    "name": "Unit Alpha",
+    "officer": "Insp. Ravi Kumar",
+    "vehicle": "TN01-PCR-01",
+    "zone": "600003",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.537309Z",
+    "zone_name": "Park Town",
+    "position": {
+      "lat": 13.082703918323075,
+      "lng": 80.27070732556054
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P002",
+    "name": "Unit Bravo",
+    "officer": "Insp. Priya Nair",
+    "vehicle": "TN01-PCR-02",
+    "zone": "600006",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.537484Z",
+    "zone_name": "Nungambakkam",
+    "position": {
+      "lat": 13.062153152337576,
+      "lng": 80.25215315233757
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P003",
+    "name": "Unit Charlie",
+    "officer": "SI Arun Selvam",
+    "vehicle": "TN01-PCR-03",
+    "zone": "600001",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.537514Z",
+    "zone_name": "Parrys",
+    "position": {
+      "lat": 13.104300813242327,
+      "lng": 80.29430081324233
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P004",
+    "name": "Unit Delta",
+    "officer": "SI Meena Kumari",
+    "vehicle": "TN01-PCR-04",
+    "zone": "600017",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.537658Z",
+    "zone_name": "T. Nagar",
+    "position": {
+      "lat": 13.04674471596995,
+      "lng": 80.23395317041803
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P005",
+    "name": "Unit Echo",
+    "officer": "SI Karthik R",
+    "vehicle": "TN01-PCR-05",
+    "zone": "600008",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.537730Z",
+    "zone_name": "Egmore",
+    "position": {
+      "lat": 13.081495508925846,
+      "lng": 80.26059640714067
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P006",
+    "name": "Unit Foxtrot",
+    "officer": "SI Divya S",
+    "vehicle": "TN01-PCR-06",
+    "zone": "600021",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.537896Z",
+    "zone_name": "Kodungaiyur",
+    "position": {
+      "lat": 13.125026199733995,
+      "lng": 80.27952183311166
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P007",
+    "name": "Unit Golf",
+    "officer": "SI Prakash M",
+    "vehicle": "TN01-PCR-07",
+    "zone": "600083",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.538202Z",
+    "zone_name": "Ashok Nagar",
+    "position": {
+      "lat": 13.032700855902712,
+      "lng": 80.2075840465856
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P008",
+    "name": "Unit Hotel",
+    "officer": "SI Lakshmi V",
+    "vehicle": "TN01-PCR-08",
+    "zone": "600023",
+    "status": "AtScene",
+    "assigned_sos_id": "SOS-3497369C",
+    "updated_at": "2026-09-04T05:43:28.616942Z",
+    "zone_name": "600023",
+    "position": {
+      "lat": 13.1,
+      "lng": 80.24
+    },
+    "eta_seconds": 0,
+    "heading": "on_scene"
+  },
+  {
+    "patrol_id": "P009",
+    "name": "Unit India",
+    "officer": "SI Suresh B",
+    "vehicle": "TN01-PCR-09",
+    "zone": "600014",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.538497Z",
+    "zone_name": "Royapettah",
+    "position": {
+      "lat": 13.051111754741,
+      "lng": 80.271111754741
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P010",
+    "name": "Unit Juliet",
+    "officer": "SI Anitha J",
+    "vehicle": "TN01-PCR-10",
+    "zone": "600030",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.538697Z",
+    "zone_name": "600030",
+    "position": {
+      "lat": 13.073259795680697,
+      "lng": 80.22325979568069
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P011",
+    "name": "Unit Kilo",
+    "officer": "SI Vikram A",
+    "vehicle": "TN01-PCR-11",
+    "zone": "600032",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.538913Z",
+    "zone_name": "Guindy",
+    "position": {
+      "lat": 13.01540462619392,
+      "lng": 80.21459537380608
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P012",
+    "name": "Unit Lima",
+    "officer": "SI Deepa N",
+    "vehicle": "TN01-PCR-12",
+    "zone": "600085",
+    "status": "Responding",
+    "assigned_sos_id": "SOS-7594E58D",
+    "updated_at": "2026-09-04T05:43:28.616271Z",
+    "zone_name": "600085",
+    "position": {
+      "lat": 13.027552060976427,
+      "lng": 80.24244791008373
+    },
+    "eta_seconds": 184,
+    "distance_m": 2804,
+    "heading": "to_scene"
+  },
+  {
+    "patrol_id": "P013",
+    "name": "Unit Mike",
+    "officer": "SI Gopal K",
+    "vehicle": "TN01-PCR-13",
+    "zone": "600040",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.539478Z",
+    "zone_name": "Anna Nagar West",
+    "position": {
+      "lat": 13.096154259507507,
+      "lng": 80.21046188292293
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P014",
+    "name": "Unit November",
+    "officer": "SI Rekha P",
+    "vehicle": "TN01-PCR-14",
+    "zone": "600010",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.539900Z",
+    "zone_name": "Kilpauk North",
+    "position": {
+      "lat": 13.113825553137755,
+      "lng": 80.20852129428145
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P015",
+    "name": "Unit Oscar",
+    "officer": "SI Manoj T",
+    "vehicle": "TN01-PCR-15",
+    "zone": "600005",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.539954Z",
+    "zone_name": "Triplicane",
+    "position": {
+      "lat": 13.06663681193083,
+      "lng": 80.27754478210376
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P016",
+    "name": "Unit Papa",
+    "officer": "SI Sangeetha L",
+    "vehicle": "TN01-PCR-16",
+    "zone": "600004",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.539999Z",
+    "zone_name": "Mylapore",
+    "position": {
+      "lat": 13.035069448495435,
+      "lng": 80.26006944849544
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P017",
+    "name": "Unit Quebec",
+    "officer": "SI Bala S",
+    "vehicle": "TN01-PCR-17",
+    "zone": "600008",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.540411Z",
+    "zone_name": "Egmore",
+    "position": {
+      "lat": 13.132223109036282,
+      "lng": 80.26222310903628
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P018",
+    "name": "Unit Romeo",
+    "officer": "SI Nisha R",
+    "vehicle": "TN01-PCR-18",
+    "zone": "600042",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.540689Z",
+    "zone_name": "Velachery",
+    "position": {
+      "lat": 12.994360653155208,
+      "lng": 80.2243606531552
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P019",
+    "name": "Unit Sierra",
+    "officer": "SI Hari V",
+    "vehicle": "TN01-PCR-19",
+    "zone": "600040",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.540946Z",
+    "zone_name": "Anna Nagar West",
+    "position": {
+      "lat": 13.086514534900944,
+      "lng": 80.21348546509905
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  },
+  {
+    "patrol_id": "P020",
+    "name": "Unit Tango",
+    "officer": "SI Uma D",
+    "vehicle": "TN01-PCR-20",
+    "zone": "600005",
+    "status": "Patrolling",
+    "assigned_sos_id": null,
+    "updated_at": "2026-09-04T05:43:28.541354Z",
+    "zone_name": "Triplicane",
+    "position": {
+      "lat": 13.052285574016466,
+      "lng": 80.29140464501373
+    },
+    "eta_seconds": null,
+    "heading": "patrol"
+  }
+]

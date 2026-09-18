@@ -1,0 +1,10 @@
+{
+  "sos_id": "SOS-7594E58D",
+  "status": "dispatched",
+  "assigned_patrol_id": "P012",
+  "assigned_officer": "SI Deepa N",
+  "eta_seconds": 184,
+  "zone_name": "Adyar",
+  "pincode": "600020",
+  "created_at": "2026-09-04T05:43:28.616132Z"
+}

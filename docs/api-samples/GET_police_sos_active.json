@@ -1,0 +1,110 @@
+[
+  {
+    "sos_id": "SOS-3497369C",
+    "status": "reached",
+    "created_at": "2026-09-04T05:43:28.616770Z",
+    "triggered_at": "2026-09-04T05:43:28.616770Z",
+    "updated_at": "2026-09-04T05:43:28.616968Z",
+    "user_id": "citizen-993",
+    "username": "Meena",
+    "pincode": "600011",
+    "zone_name": "Perambur",
+    "risk_level": "HIGH",
+    "battery": null,
+    "network": null,
+    "events": [
+      {
+        "type": "SOS Created",
+        "ts": "2026-09-04T05:43:28.616774Z",
+        "detail": "SOS raised in Perambur",
+        "pincode": "600011"
+      },
+      {
+        "type": "Patrol Assigned",
+        "ts": "2026-09-04T05:43:28.616909Z",
+        "detail": "Unit Hotel (TN01-PCR-08) assigned",
+        "patrol_id": "P008"
+      },
+      {
+        "type": "En Route",
+        "ts": "2026-09-04T05:43:28.616911Z",
+        "detail": "ETA ~36s",
+        "patrol_id": "P008"
+      },
+      {
+        "type": "Reached",
+        "ts": "2026-09-04T05:43:28.616965Z",
+        "detail": "Officer on scene",
+        "patrol_id": "P008"
+      }
+    ],
+    "lat": 13.1,
+    "lng": 80.24,
+    "latitude": 13.1,
+    "longitude": 80.24,
+    "assigned_patrol_id": "P008",
+    "assigned_officer": "SI Lakshmi V",
+    "assigned_vehicle": "TN01-PCR-08",
+    "eta_seconds": 0,
+    "dispatched_at": "2026-09-04T05:43:28.616770Z",
+    "reached_at": "2026-09-04T05:43:28.616942Z",
+    "officer_id": "OFF-7",
+    "distance_km": 5.51,
+    "area_name": "Perambur",
+    "patrol_position": {
+      "lat": 13.1,
+      "lng": 80.24
+    },
+    "patrol_status": "AtScene"
+  },
+  {
+    "sos_id": "SOS-7594E58D",
+    "status": "dispatched",
+    "created_at": "2026-09-04T05:43:28.616132Z",
+    "triggered_at": "2026-09-04T05:43:28.616132Z",
+    "updated_at": "2026-09-04T05:43:28.616132Z",
+    "user_id": "citizen-421",
+    "username": "Asha",
+    "pincode": "600020",
+    "zone_name": "Adyar",
+    "risk_level": "HIGH",
+    "battery": 47,
+    "network": "4G",
+    "events": [
+      {
+        "type": "SOS Created",
+        "ts": "2026-09-04T05:43:28.616140Z",
+        "detail": "SOS raised in Adyar",
+        "pincode": "600020"
+      },
+      {
+        "type": "Patrol Assigned",
+        "ts": "2026-09-04T05:43:28.616557Z",
+        "detail": "Unit Lima (TN01-PCR-12) assigned",
+        "patrol_id": "P012"
+      },
+      {
+        "type": "En Route",
+        "ts": "2026-09-04T05:43:28.616561Z",
+        "detail": "ETA ~184s",
+        "patrol_id": "P012"
+      }
+    ],
+    "lat": 13.0067,
+    "lng": 80.257,
+    "latitude": 13.0067,
+    "longitude": 80.257,
+    "assigned_patrol_id": "P012",
+    "assigned_officer": "SI Deepa N",
+    "assigned_vehicle": "TN01-PCR-12",
+    "eta_seconds": 184,
+    "dispatched_at": "2026-09-04T05:43:28.616132Z",
+    "distance_km": 6.09,
+    "area_name": "Adyar",
+    "patrol_position": {
+      "lat": 13.027551974182982,
+      "lng": 80.24244797065452
+    },
+    "patrol_status": "Responding"
+  }
+]

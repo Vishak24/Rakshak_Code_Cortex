@@ -1,0 +1,141 @@
+{
+  "generated_at": "2026-09-04T05:43:28.665347Z",
+  "count": 15,
+  "events": [
+    {
+      "sos_id": "SOS-7594E58D",
+      "pincode": "600020",
+      "zone_name": "Adyar",
+      "type": "Resolved",
+      "ts": "2026-09-04T05:43:28.624310Z",
+      "detail": "Incident resolved",
+      "patrol_id": "P012"
+    },
+    {
+      "sos_id": "SOS-3497369C",
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "type": "Reached",
+      "ts": "2026-09-04T05:43:28.618071Z",
+      "detail": "Officer on scene",
+      "patrol_id": "P008"
+    },
+    {
+      "sos_id": "SOS-3497369C",
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "type": "Reached",
+      "ts": "2026-09-04T05:43:28.616965Z",
+      "detail": "Officer on scene",
+      "patrol_id": "P008"
+    },
+    {
+      "sos_id": "SOS-3497369C",
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "type": "En Route",
+      "ts": "2026-09-04T05:43:28.616911Z",
+      "detail": "ETA ~36s",
+      "patrol_id": "P008"
+    },
+    {
+      "sos_id": "SOS-3497369C",
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "type": "Patrol Assigned",
+      "ts": "2026-09-04T05:43:28.616909Z",
+      "detail": "Unit Hotel (TN01-PCR-08) assigned",
+      "patrol_id": "P008"
+    },
+    {
+      "sos_id": "SOS-3497369C",
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "type": "SOS Created",
+      "ts": "2026-09-04T05:43:28.616774Z",
+      "detail": "SOS raised in Perambur",
+      "patrol_id": null
+    },
+    {
+      "sos_id": "SOS-7594E58D",
+      "pincode": "600020",
+      "zone_name": "Adyar",
+      "type": "En Route",
+      "ts": "2026-09-04T05:43:28.616561Z",
+      "detail": "ETA ~184s",
+      "patrol_id": "P012"
+    },
+    {
+      "sos_id": "SOS-7594E58D",
+      "pincode": "600020",
+      "zone_name": "Adyar",
+      "type": "Patrol Assigned",
+      "ts": "2026-09-04T05:43:28.616557Z",
+      "detail": "Unit Lima (TN01-PCR-12) assigned",
+      "patrol_id": "P012"
+    },
+    {
+      "sos_id": "SOS-7594E58D",
+      "pincode": "600020",
+      "zone_name": "Adyar",
+      "type": "SOS Created",
+      "ts": "2026-09-04T05:43:28.616140Z",
+      "detail": "SOS raised in Adyar",
+      "patrol_id": null
+    },
+    {
+      "sos_id": "SOS-HIST00",
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "type": "Resolved",
+      "ts": "2026-09-04T04:01:28.615996Z",
+      "detail": "Incident resolved",
+      "patrol_id": "P001"
+    },
+    {
+      "sos_id": "SOS-HIST00",
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "type": "Reached",
+      "ts": "2026-09-04T03:52:28.615996Z",
+      "detail": "Officer on scene",
+      "patrol_id": "P001"
+    },
+    {
+      "sos_id": "SOS-HIST00",
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "type": "Patrol Assigned",
+      "ts": "2026-09-04T03:44:08.615996Z",
+      "detail": "Unit assigned",
+      "patrol_id": "P001"
+    },
+    {
+      "sos_id": "SOS-HIST00",
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "type": "En Route",
+      "ts": "2026-09-04T03:44:08.615996Z",
+      "detail": "ETA ~180s",
+      "patrol_id": "P001"
+    },
+    {
+      "sos_id": "SOS-HIST00",
+      "pincode": "600001",
+      "zone_name": "Parrys",
+      "type": "SOS Created",
+      "ts": "2026-09-04T03:43:28.615996Z",
+      "detail": "Harassment reported",
+      "patrol_id": null
+    },
+    {
+      "sos_id": "SOS-HIST01",
+      "pincode": "600011",
+      "zone_name": "Perambur",
+      "type": "Resolved",
+      "ts": "2026-09-04T03:01:28.616041Z",
+      "detail": "Incident resolved",
+      "patrol_id": "P002"
+    }
+  ]
+}
