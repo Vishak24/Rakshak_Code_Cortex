@@ -1,0 +1,10 @@
+# ML Lambda layer — installed with binary-only manylinux wheels for python3.12
+# / x86_64 (see deploy.py build_layer_if_needed). xgboost-cpu (not xgboost) is
+# deliberate: it drops the CUDA/GPU build, ~5.6MB vs xgboost's much larger wheel,
+# and is all rakshak_common.ml needs (raw Booster API, no training).
+#
+# Pinned versions are the ones validated against booster.json
+# (deploy/sagemaker/validation.json — exact parity, max diff 0.0).
+numpy==2.1.3
+scipy==1.14.1
+xgboost-cpu==3.2.0

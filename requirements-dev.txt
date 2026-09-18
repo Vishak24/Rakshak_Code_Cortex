@@ -1,0 +1,5 @@
+# Local dev + deploy tooling. NOT shipped to Lambda (see deploy/requirements-layer.txt
+# for the runtime ML layer). Install into a venv:  python3 -m venv venv && source
+# venv/bin/activate && pip install -r requirements-dev.txt
+boto3==1.35.99
+pytest==8.3.4
