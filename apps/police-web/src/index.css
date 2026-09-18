@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-black text-slate-100 min-h-screen antialiased selection:bg-police-teal selection:text-dark-950;
+  }
+}
+
+.tactical-panel {
+  background: rgba(17, 23, 36, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tactical-card {
+  background: linear-gradient(135deg, rgba(26, 35, 51, 0.7) 0%, rgba(11, 15, 23, 0.9) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Leaflet Dark Mode Overrides */
+.leaflet-container {
+  background: #0b0f17 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.leaflet-tile {
+  filter: brightness(0.55) invert(1) contrast(3) hue-rotate(185deg) saturate(0.3) brightness(0.7) !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f17;
+}
+::-webkit-scrollbar-thumb {
+  background: #253248;
+  border-radius: 9999px;
+}

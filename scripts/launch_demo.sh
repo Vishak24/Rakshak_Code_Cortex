@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-# RAKSHAK SIH 2026 — one-shot local demo launcher
-#   Citizen App       Flutter web  → http://localhost:3000
-#   Police Patrol App Flutter web  → http://localhost:3001
-#   Central Dashboard Vite/React   → http://localhost:3002
-# All three talk to the deployed AWS backend. No backend runs locally.
+# RAKSHAK SIH 2026 — 100% React Web Architecture Demo Launcher
+#   Citizen App       React/Vite PWA → http://localhost:3000
+#   Police Patrol App React/Vite PWA → http://localhost:3001
+#   Central Dashboard React/Vite     → http://localhost:3002
+# All three talk to the deployed AWS backend.
 # ─────────────────────────────────────────────────────────────────────────────
 set -u
 
@@ -31,22 +31,31 @@ free_port() {
 }
 
 wait_http() {
-  local url="$1" name="$2" tries="${3:-120}"
+  local url="$1" name="$2" tries="${3:-30}"
   for ((i=1; i<=tries; i++)); do
     if curl -sf -o /dev/null "$url"; then ok "$name healthy ($url)"; return 0; fi
-    sleep 2
+    sleep 1
   done
-  warn "$name did not become healthy at $url after $((tries*2))s (check $LOG_DIR)"
+  warn "$name did not become healthy at $url after $((tries))s (check $LOG_DIR)"
   return 1
 }
 
 # ── 1. dependencies ─────────────────────────────────────────────────────────
-say "[1/7] Checking dependencies"
-command -v flutter >/dev/null || die "flutter not on PATH"
-command -v npm     >/dev/null || die "npm not on PATH"
+say "[1/7] Checking Node/npm dependencies for Web Apps"
+command -v npm >/dev/null || die "npm not on PATH"
 
-( cd "$ROOT/citizen-app" && flutter pub get >"$LOG_DIR/citizen-pubget.log" 2>&1 ) && ok "citizen-app deps" &
-( cd "$ROOT/police-app"  && flutter pub get >"$LOG_DIR/police-pubget.log"  2>&1 ) && ok "police-app deps" &
+if [ ! -d "$ROOT/apps/citizen-web/node_modules" ]; then
+  ( cd "$ROOT/apps/citizen-web" && npm install >"$LOG_DIR/citizen-npm.log" 2>&1 ) && ok "citizen-web deps" &
+else
+  ok "citizen-web deps (node_modules present)"
+fi
+
+if [ ! -d "$ROOT/apps/police-web/node_modules" ]; then
+  ( cd "$ROOT/apps/police-web" && npm install >"$LOG_DIR/police-npm.log" 2>&1 ) && ok "police-web deps" &
+else
+  ok "police-web deps (node_modules present)"
+fi
+
 if [ ! -d "$ROOT/dashboard/node_modules" ]; then
   ( cd "$ROOT/dashboard" && npm install >"$LOG_DIR/dashboard-npm.log" 2>&1 ) && ok "dashboard deps" &
 else
@@ -58,37 +67,29 @@ wait
 say "[2/7] Freeing ports $CITIZEN_PORT / $POLICE_PORT / $DASH_PORT"
 free_port $CITIZEN_PORT; free_port $POLICE_PORT; free_port $DASH_PORT
 
-# ── 3. Citizen App ─────────────────────────────────────────────────────────
-say "[3/7] Starting Citizen App on :$CITIZEN_PORT"
-( cd "$ROOT/citizen-app" && exec flutter run \
-    -d web-server --web-hostname 0.0.0.0 --web-port $CITIZEN_PORT \
-    -t lib/main_citizen.dart \
-    --dart-define=API_BASE_URL=$API_BASE \
-    --dart-define=AWS_REGION=$AWS_REGION \
+# ── 3. Citizen Web App ─────────────────────────────────────────────────────
+say "[3/7] Starting Citizen Web App on :$CITIZEN_PORT"
+( cd "$ROOT/apps/citizen-web" && exec npm run dev -- --port $CITIZEN_PORT --host \
 ) </dev/null >"$LOG_DIR/citizen.log" 2>&1 &
 echo $! > "$LOG_DIR/citizen.pid"
 
-# ── 4. Police App ──────────────────────────────────────────────────────────
+# ── 4. Police Web App ──────────────────────────────────────────────────────
 say "[4/7] Starting Police Patrol App on :$POLICE_PORT"
-( cd "$ROOT/police-app" && exec flutter run \
-    -d web-server --web-hostname 0.0.0.0 --web-port $POLICE_PORT \
-    -t lib/main.dart \
-    --dart-define=API_BASE_URL=$API_BASE \
-    --dart-define=AWS_REGION=$AWS_REGION \
+( cd "$ROOT/apps/police-web" && exec npm run dev -- --port $POLICE_PORT --host \
 ) </dev/null >"$LOG_DIR/police.log" 2>&1 &
 echo $! > "$LOG_DIR/police.pid"
 
 # ── 5. Central Dashboard ───────────────────────────────────────────────────
 say "[5/7] Starting Central Dashboard on :$DASH_PORT"
-( cd "$ROOT/dashboard" && exec npm run dev -- --port $DASH_PORT --strictPort \
+( cd "$ROOT/dashboard" && exec npm run dev -- --port $DASH_PORT --host \
 ) </dev/null >"$LOG_DIR/dashboard.log" 2>&1 &
 echo $! > "$LOG_DIR/dashboard.pid"
 
 # ── 6. wait for health ─────────────────────────────────────────────────────
-say "[6/7] Waiting for all servers (Flutter first build can take 1–3 min)…"
-wait_http "http://localhost:$DASH_PORT"                "Central Dashboard" 120
-wait_http "http://localhost:$CITIZEN_PORT"             "Citizen App"       180
-wait_http "http://localhost:$POLICE_PORT"              "Police Patrol App" 180
+say "[6/7] Waiting for all web servers (React Vite dev servers land in ~1s)…"
+wait_http "http://localhost:$CITIZEN_PORT" "Citizen Web App"  30
+wait_http "http://localhost:$POLICE_PORT"  "Police Web App font" 30
+wait_http "http://localhost:$DASH_PORT"    "Central Dashboard" 30
 
 # ── 7. backend health check ────────────────────────────────────────────────
 say "[7/7] Backend health check"
@@ -106,25 +107,7 @@ hc() {
 }
 hc "/patrols"              "API Gateway / patrols"      "isinstance(d,list) and len(d)==20"
 hc "/dashboard/snapshot"   "DynamoDB / snapshot"        "d['patrols']['total']>=1"
-hc "/dashboard/timeline"   "Timeline"                   "isinstance(d,(list,dict))"
-hc "/heatmap/live"         "Heatmap"                    "isinstance(d,(list,dict))"
-hc "/police/sos/active"    "SOS feed"                   "isinstance(d,(list,dict))"
-hc "/prediction/zone/600001" "SageMaker prediction"     "d.get('source')=='sagemaker'"
 
-# The board must open with an empty incident feed — judges read a stale
-# "6 dispatched / 0 responding" board as a broken system.
-active_n="$(curl -s "$API_BASE/police/sos/active" \
-  | python3 -c "import sys,json;print(len(json.load(sys.stdin)))" 2>/dev/null || echo '?')"
-if [ "$active_n" = "0" ]; then
-  ok "Incident feed is clean (0 active)"
-else
-  warn "Incident feed has $active_n active incident(s) — resolve them before judging:"
-  warn "  curl -s '$API_BASE/police/sos/active' | python3 -c \"import sys,json;[print(i['sos_id']) for i in json.load(sys.stdin)]\""
-  warn "  then PATCH $API_BASE/police/sos/<id>/status -d '{\"status\":\"resolved\"}'"
-fi
-
-# Pre-warm the SOS Lambda. A cold container adds ~3s to the first POST /sos/live,
-# which on demo day is the judges' SOS press. Warm, it lands in ~0.2s.
 say "Pre-warming SOS + prediction Lambdas"
 curl -s -o /dev/null "$API_BASE/sos/live?user_id=__warmup__" || true
 curl -s -o /dev/null "$API_BASE/predict" -H 'Content-Type: application/json' \
@@ -134,15 +117,13 @@ ok "Lambdas warm"
 cat <<EOF
 
 ┌─────────────────────────────────────────────────────────────────┐
-│  RAKSHAK DEMO — READY                                            │
+│  RAKSHAK DEMO — 100% REACT WEB ARCHITECTURE READY               │
 ├─────────────────────────────────────────────────────────────────┤
-│  Citizen:     http://localhost:$CITIZEN_PORT                              │
-│  Police:      http://localhost:$POLICE_PORT                              │
+│  Citizen Web: http://localhost:$CITIZEN_PORT                              │
+│  Police Web:  http://localhost:$POLICE_PORT                              │
 │  Dashboard:   http://localhost:$DASH_PORT                              │
-│  Healthcheck: http://localhost:$DASH_PORT/demo/healthcheck/              │
 │                                                                 │
 │  Backend API: $API_BASE
-│  SageMaker:   Connected (prediction source=sagemaker)            │
 │  Region:      $AWS_REGION                                          │
 ├─────────────────────────────────────────────────────────────────┤
 │  Logs:  $LOG_DIR

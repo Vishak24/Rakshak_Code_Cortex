@@ -1,0 +1,777 @@
+{
+  "$schema_notes": "Canonical, machine-readable Rakshak backend API contract for Citizen Web, Police Web, and Central Command Dashboard frontend teams. Generated from a live read-only audit of account 468704514492 (ap-south-1) on 2026-09-18, cross-checked against backend/lambdas/*/lambda_function.py source and docs/api-samples/*.json real captured payloads.",
+  "base_url": "https://aksdwfbnn5.execute-api.ap-south-1.amazonaws.com",
+  "stage": "$default (no stage path segment)",
+  "protocol": "HTTP API (API Gateway v2), AWS_PROXY integration, payload format v2.0",
+  "auth": "none -- every route is public. See SECURITY_MODEL.md.",
+  "cors": {
+    "AllowOrigins": [
+      "*"
+    ],
+    "AllowMethods": [
+      "GET",
+      "POST",
+      "PATCH",
+      "OPTIONS"
+    ],
+    "AllowHeaders": [
+      "content-type",
+      "authorization",
+      "x-amz-date",
+      "x-api-key"
+    ],
+    "MaxAge": 300
+  },
+  "route_counts": {
+    "live_total": 37,
+    "frozen_contract": 15,
+    "legacy": 20,
+    "orphaned_undocumented": 1,
+    "gateway_internal": 1,
+    "reconciliation_note": "API_REFERENCE.md's prose states '14 frozen + 23 legacy = 37'; the actual deploy/routes.py source declares 15 contract + 20 legacy = 35. The remaining 2 live routes (OPTIONS /{proxy+}, POST /score/refresh) are undeclared -- see undocumented_live_routes. Recorded as an integration mismatch, not corrected in the existing prose docs by this audit (read-only scope)."
+  },
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/sos",
+      "function": "rakshak-sos-handler",
+      "team": "citizen",
+      "auth": "none",
+      "status": "frozen-contract",
+      "request_example": {
+        "user_id": "citizen-421",
+        "username": "Asha",
+        "latitude": 13.0067,
+        "longitude": 80.257,
+        "pincode": "600020",
+        "risk_level": "HIGH"
+      },
+      "request_notes": "All fields optional except that if latitude/longitude are present they must be numeric and inside the Chennai bounding box (lat 12.7-13.4, lng 79.9-80.4) or the request 400s. Omitting lat/lng creates a queued, undispatched incident.",
+      "response_status": 201,
+      "response_example": {
+        "sos_id": "SOS-7594E58D",
+        "status": "dispatched",
+        "assigned_patrol_id": "P012",
+        "assigned_officer": "SI Deepa N",
+        "eta_seconds": 184,
+        "zone_name": "Adyar",
+        "pincode": "600020",
+        "created_at": "2026-09-04T05:43:28.616132Z"
+      },
+      "response_notes": "status is 'dispatched' if a free patrol existed, else 'active' with assigned_patrol_id null. This is NOT the full incident shape -- fetch GET /incident/{id} for the full row.",
+      "errors": [
+        400
+      ],
+      "legacy_alias_of": null,
+      "notes": "Alias of POST /sos/live with identical behavior (same _create() function)."
+    },
+    {
+      "method": "GET",
+      "path": "/incident/{id}",
+      "function": "rakshak-sos-handler",
+      "team": "citizen",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": "see API_MODELS.md IncidentModel -- full row incl. events[]",
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Enriched with live patrol_position/eta_seconds when status is dispatched|reached."
+    },
+    {
+      "method": "GET",
+      "path": "/incident/{id}/eta",
+      "function": "rakshak-sos-handler",
+      "team": "citizen",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": {
+        "sos_id": "SOS-3F5D3264",
+        "status": "resolved",
+        "assigned_patrol_id": "P003",
+        "eta_seconds": 0,
+        "distance_m": null,
+        "patrol_position": null
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Minimal payload for a tight poll interval -- use this, not GET /incident/{id}, for the citizen ETA screen."
+    },
+    {
+      "method": "GET",
+      "path": "/incidents/active",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "auth": "none",
+      "status": "frozen-contract",
+      "query_params": {
+        "officer_lat": "float, default 13.06",
+        "officer_lng": "float, default 80.27",
+        "patrol_id": "optional, filter to one unit's incident"
+      },
+      "response_status": 200,
+      "response_example": "array of IncidentModel + distance_km, area_name, patrol_position, patrol_status -- see api-samples/GET_police_sos_active.json",
+      "errors": [],
+      "notes": "Sorted ascending by distance_km to officer_lat/lng, capped at 50 rows. Alias of GET /police/sos/active (identical handler function _active())."
+    },
+    {
+      "method": "PATCH",
+      "path": "/incident/{id}/accept",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "auth": "none",
+      "status": "frozen-contract",
+      "request_example": {
+        "officer_id": "PATROL-104"
+      },
+      "response_status": 200,
+      "response_example": {
+        "sos_id": "SOS-...",
+        "status": "dispatched",
+        "assigned_patrol_id": "P012",
+        "accepted_at": "2026-09-18T09:00:00Z"
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Records acknowledgment only -- does NOT change status. The backend already auto-dispatches on creation; there is no separate accept/reject decision."
+    },
+    {
+      "method": "PATCH",
+      "path": "/incident/{id}/status",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "auth": "none",
+      "status": "frozen-contract",
+      "request_example": {
+        "status": "reached",
+        "officer_id": "PATROL-104",
+        "notes": "Officer on scene"
+      },
+      "request_notes": "status accepts any alias in the table in ERROR_HANDLING_GUIDE.md / API_REFERENCE.md; canonicalized server-side.",
+      "response_status": 200,
+      "response_example": {
+        "sos_id": "SOS-3497369C",
+        "status": "reached",
+        "assigned_patrol_id": "P008"
+      },
+      "response_notes": "Partial object only (sos_id, status, assigned_patrol_id) -- NOT the full incident. Frontends must refetch GET /incident/{id} to refresh derived fields.",
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "400 if status is unrecognized, or if incident is already resolved/cancelled (terminal) and the new status is not terminal."
+    },
+    {
+      "method": "PATCH",
+      "path": "/incident/{id}/resolve",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "auth": "none",
+      "status": "frozen-contract",
+      "request_example": {
+        "officer_id": "PATROL-104",
+        "notes": "Officer verified citizen safety at scene."
+      },
+      "response_status": 200,
+      "response_example": {
+        "sos_id": "SOS-7594E58D",
+        "status": "resolved",
+        "assigned_patrol_id": "P012"
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Shorthand for PATCH .../status with status=resolved. Releases the assigned patrol back to its route (status -> Returning)."
+    },
+    {
+      "method": "GET",
+      "path": "/dashboard/snapshot",
+      "function": "rakshak-dashboard",
+      "team": "dashboard",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": "see api-samples/GET_dashboard_snapshot.json / DashboardSnapshotModel",
+      "errors": [],
+      "notes": "high_risk_zones is top-5 by safety_score ascending (most dangerous first), NOT the full 44-zone set -- use /dashboard/heatmap for that."
+    },
+    {
+      "method": "GET",
+      "path": "/dashboard/patrols",
+      "function": "rakshak-patrol-handler",
+      "team": "dashboard",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": "array of PatrolModel -- see api-samples/GET_patrols.json",
+      "errors": [],
+      "notes": "Byte-identical response shape to legacy GET /patrols (verified live -- same handler, same _list_patrols())."
+    },
+    {
+      "method": "GET",
+      "path": "/dashboard/timeline",
+      "function": "rakshak-dashboard",
+      "team": "dashboard",
+      "auth": "none",
+      "status": "frozen-contract",
+      "query_params": {
+        "limit": "int, default 100, max 500"
+      },
+      "response_status": 200,
+      "response_example": "see api-samples/GET_dashboard_timeline.json / TimelineEventModel",
+      "errors": [],
+      "notes": "Flattened across ALL incidents (not just active), newest first."
+    },
+    {
+      "method": "GET",
+      "path": "/dashboard/heatmap",
+      "function": "rakshak-dashboard",
+      "team": "dashboard",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": "see api-samples/GET_heatmap_live.json",
+      "errors": [],
+      "notes": "Byte-identical response shape to legacy GET /heatmap/live (verified live -- same handler, same _heatmap()). All 44 serviced zones, safety_score/risk_level snake_case."
+    },
+    {
+      "method": "GET",
+      "path": "/prediction/{zone}",
+      "function": "rakshak-dashboard",
+      "team": "dashboard",
+      "auth": "none",
+      "status": "frozen-contract",
+      "path_params": {
+        "zone": "a serviced Chennai pincode, e.g. 600020"
+      },
+      "response_status": 200,
+      "response_example": {
+        "safetyScore": 58,
+        "riskLevel": "MEDIUM",
+        "confidence": 0.55,
+        "zone": "Adyar",
+        "pincode": "600020",
+        "source": "baseline"
+      },
+      "response_notes": "CAMELCASE -- safetyScore/riskLevel, NOT safety_score/risk_level like /dashboard/heatmap. This is a genuine, source-level naming split (rakshak_common.predict_safety() returns camelCase; the dashboard handler's _zone_scores() re-maps to snake_case for heatmap/snapshot only). Do not 'fix' client-side by guessing -- branch on the route.",
+      "errors": [
+        404
+      ],
+      "notes": "404 if {zone} is not one of the 44 serviced pincodes."
+    },
+    {
+      "method": "POST",
+      "path": "/predict",
+      "function": "rakshak-test-inference",
+      "team": "dashboard",
+      "auth": "none",
+      "status": "frozen-contract",
+      "request_example": {
+        "pincode": "600020"
+      },
+      "request_notes": "Optional feature overrides accepted (see rakshak_common.FEATURE_ORDER) but not required.",
+      "response_status": 200,
+      "response_example": {
+        "safetyScore": 58,
+        "riskLevel": "MEDIUM",
+        "confidence": 0.55,
+        "zone": "Adyar",
+        "pincode": "600020",
+        "source": "baseline"
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Same camelCase shape and 3-tier resolver (sagemaker -> s3-model -> baseline) as GET /prediction/{zone}. source tells you which tier answered."
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "function": "rakshak-dashboard",
+      "team": "system",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": {
+        "status": "ok",
+        "checks": {
+          "dynamodb:rakshak-patrols": "ok",
+          "dynamodb:rakshak-sos-alerts": "ok",
+          "ml": "s3-model"
+        },
+        "ml_tiers": {
+          "sagemaker": "cooldown (299s left)",
+          "s3-model": "open"
+        },
+        "version": "1.0.0",
+        "generated_at": "2026-09-18T09:14:40.836710Z"
+      },
+      "response_notes": "Captured live 2026-09-18. status is 'degraded' (not a non-200) if a DynamoDB check or the ML probe fails -- frontends must read the field, not just the HTTP status.",
+      "errors": []
+    },
+    {
+      "method": "GET",
+      "path": "/version",
+      "function": "rakshak-dashboard",
+      "team": "system",
+      "auth": "none",
+      "status": "frozen-contract",
+      "response_status": 200,
+      "response_example": {
+        "version": "1.0.0",
+        "generated_at": "2026-09-18T09:14:41.033597Z"
+      },
+      "errors": [],
+      "notes": "version is BUILD_VERSION env var if set (it is not, on any live function today), else the code constant '1.0.0'."
+    },
+    {
+      "method": "POST",
+      "path": "/sos/live",
+      "function": "rakshak-sos-handler",
+      "team": "citizen",
+      "status": "legacy",
+      "contract_equivalent": "POST /sos",
+      "response_example": "see api-samples/POST_sos_live__response.json",
+      "errors": [
+        400
+      ],
+      "notes": "Identical handler (_create()) to POST /sos. citizen-web's api.js calls this as its fallback if /sos throws."
+    },
+    {
+      "method": "GET",
+      "path": "/sos/live",
+      "function": "rakshak-sos-handler",
+      "team": "citizen",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "query_params": {
+        "user_id": "optional filter"
+      },
+      "response_example": "see api-samples/GET_sos_live.json / GET_sos_live__by_user.json",
+      "errors": [],
+      "notes": "No frozen-contract equivalent -- this is the citizen's own live-incidents feed (LIVE_STATES only), filterable by user_id. Keep using this for 'my active SOS' polling; GET /incident/{id} is for a single known id."
+    },
+    {
+      "method": "POST",
+      "path": "/sos/dispatch/{id}",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "response_example": {
+        "sos_id": "SOS-...",
+        "status": "dispatched",
+        "assigned_patrol_id": "P0..",
+        "eta_seconds": 120
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Idempotent manual (re)dispatch -- returns 'already dispatched' note if the incident already has a patrol. No route in deploy/routes.py's CONTRACT calls the equivalent flow explicitly; auto-dispatch on POST /sos supersedes this for new incidents."
+    },
+    {
+      "method": "PATCH",
+      "path": "/sos/resolve/{id}",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "status": "legacy",
+      "contract_equivalent": "PATCH /incident/{id}/resolve",
+      "response_example": "see api-samples/PATCH_sos_resolve.json",
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "police-web's api.js calls this as its resolve fallback."
+    },
+    {
+      "method": "POST",
+      "path": "/sos/cancelled",
+      "function": "rakshak-sos-handler",
+      "team": "citizen",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "request_example": {
+        "sos_id": "SOS-EXAMPLE1",
+        "user_phone": ""
+      },
+      "response_example": "see api-samples/POST_sos_cancelled.json",
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Citizen-initiated cancel; releases the assigned patrol. No frozen-contract equivalent -- keep calling this for the citizen 'cancel my SOS' action."
+    },
+    {
+      "method": "GET",
+      "path": "/police/sos/active",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "status": "legacy",
+      "contract_equivalent": "GET /incidents/active",
+      "response_example": "see api-samples/GET_police_sos_active.json, GET_police_sos_active__by_patrol.json",
+      "errors": [],
+      "notes": "Byte-identical to GET /incidents/active (same _active() function). dashboard/src/config/api.js and police-web's api.js both currently call this legacy path."
+    },
+    {
+      "method": "PATCH",
+      "path": "/police/sos/{sos_id}/status",
+      "function": "rakshak-sos-handler",
+      "team": "police",
+      "status": "legacy",
+      "contract_equivalent": "PATCH /incident/{id}/status",
+      "response_example": "see api-samples/PATCH_police_sos_status__reached.json",
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "dashboard/src/config/api.js currently targets this legacy path."
+    },
+    {
+      "method": "GET",
+      "path": "/patrols",
+      "function": "rakshak-patrol-handler",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": "GET /dashboard/patrols",
+      "response_example": "see api-samples/GET_patrols.json",
+      "errors": [],
+      "notes": "Byte-identical to GET /dashboard/patrols (verified live). dashboard hooks (useLivePatrols) and police-web's api.js both currently call this legacy path."
+    },
+    {
+      "method": "PATCH",
+      "path": "/patrols/{id}/status",
+      "function": "rakshak-patrol-handler",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "request_example": {
+        "status": "Patrolling"
+      },
+      "request_notes": "status must be exactly one of Patrolling|Responding|AtScene|Returning (case-sensitive, NOT the incident status aliases).",
+      "response_example": {
+        "patrol_id": "P001",
+        "status": "Patrolling"
+      },
+      "errors": [
+        400
+      ],
+      "notes": "Manual override kept for ops/testing. Setting to Patrolling re-anchors the unit's route cycle and clears any divert/return/assigned-SOS state."
+    },
+    {
+      "method": "POST",
+      "path": "/patrol/optimize",
+      "function": "rakshak-patrol-handler",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "request_example": {
+        "zones": [
+          {
+            "pincode": "600011",
+            "risk_level": "HIGH"
+          }
+        ]
+      },
+      "response_example": {
+        "deployment_zones": [
+          {
+            "pincode": "600011",
+            "name": "Perambur",
+            "priority": "HIGH",
+            "suggested_units": 3,
+            "reason": "Critical activity \u2014 3 units recommended"
+          }
+        ]
+      },
+      "errors": [],
+      "notes": "Pure static-rule allocator (HIGH->3, MEDIUM->2, LOW->1 units) -- does not read or write DynamoDB, does not actually move patrols."
+    },
+    {
+      "method": "GET",
+      "path": "/heatmap/live",
+      "function": "rakshak-dashboard",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": "GET /dashboard/heatmap",
+      "response_example": "see api-samples/GET_heatmap_live.json",
+      "errors": [],
+      "notes": "citizen-web and dashboard's useRiskData hook both currently call this legacy path, not the contract path."
+    },
+    {
+      "method": "GET",
+      "path": "/prediction/zone/{zoneId}",
+      "function": "rakshak-dashboard",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": "GET /prediction/{zone}",
+      "response_example": "see api-samples/GET_prediction_zone.json",
+      "errors": [
+        404
+      ],
+      "notes": "dashboard's config/api.js predictionZone() currently targets this legacy path. Same camelCase response shape as the contract path."
+    },
+    {
+      "method": "GET",
+      "path": "/reports",
+      "function": "rakshak-reports-handler",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "response_example": "see api-samples/GET_reports.json",
+      "errors": [],
+      "notes": "Citizen safety-report moderation queue (rakshak-incidents table -- distinct from SOS incidents). No frozen-contract equivalent."
+    },
+    {
+      "method": "POST",
+      "path": "/reports/submit",
+      "function": "rakshak-reports-handler",
+      "team": "citizen",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "request_example": {
+        "pincode": "600020",
+        "description": "Broken street light near park",
+        "type": "infrastructure"
+      },
+      "response_example": "see api-samples/POST_reports_submit.json",
+      "errors": [
+        400
+      ],
+      "notes": "Creates a pending report; status transitions via /reports/approve or /reports/reject (dashboard moderator action)."
+    },
+    {
+      "method": "PATCH",
+      "path": "/reports/approve/{id}",
+      "function": "rakshak-reports-handler",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "response_example": {
+        "incident_id": "...",
+        "status": "approved"
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Not captured live this pass -- shape inferred from GET /reports + reports-handler naming convention, not from a real response body."
+    },
+    {
+      "method": "PATCH",
+      "path": "/reports/reject/{id}",
+      "function": "rakshak-reports-handler",
+      "team": "dashboard",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "response_example": {
+        "incident_id": "...",
+        "status": "rejected"
+      },
+      "errors": [
+        400,
+        404
+      ],
+      "notes": "Not captured live this pass -- shape inferred, not observed."
+    },
+    {
+      "method": "GET",
+      "path": "/police/citizens/active",
+      "function": "rakshak-night-monitor",
+      "team": "police",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "response_status": 200,
+      "response_example": {
+        "total_count": 0,
+        "by_pincode": [],
+        "last_updated": "2026-09-18T09:15:09.372543+00:00Z",
+        "note": "Current IST hour 14 is before after_hour=22"
+      },
+      "response_notes": "Captured live 2026-09-18. Only returns nonzero data during night hours (after_hour, IST) -- the 'note' field explains an empty result and is safe to surface in a debug UI but not to an end user.",
+      "errors": []
+    },
+    {
+      "method": "POST",
+      "path": "/citizens/ping",
+      "function": "rakshak-night-monitor",
+      "team": "citizen",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "request_notes": "location + timestamp heartbeat body (see rakshak-users table in DATABASE_SCHEMA.md).",
+      "response_example": "see api-samples/POST_citizens_ping.json",
+      "errors": [
+        400
+      ],
+      "notes": "Night-mode safety heartbeat -- writes to rakshak-users, unrelated to any auth/login system (there is none)."
+    },
+    {
+      "method": "GET",
+      "path": "/police/route",
+      "function": "rakshak-routing",
+      "team": "police",
+      "status": "legacy",
+      "contract_equivalent": null,
+      "query_params": {
+        "from_lat": "float",
+        "from_lng": "float",
+        "to_lat": "float",
+        "to_lng": "float",
+        "sos_id": "string"
+      },
+      "response_status": 200,
+      "response_example": {
+        "sos_id": "test",
+        "destination": {
+          "lat": 13.08,
+          "lng": 80.24,
+          "pincode": "600010",
+          "area_name": "Vepery"
+        },
+        "google_maps_url": "https://www.google.com/maps/dir/?api=1&origin=13.06,80.27&destination=13.08,80.24&travelmode=driving",
+        "distance_km": 3.94,
+        "eta_minutes": 13
+      },
+      "response_notes": "Captured live 2026-09-18. Returns a Google Maps deep link, not turn-by-turn geometry -- the police app should open google_maps_url externally, not try to render a route polyline from this response.",
+      "errors": []
+    },
+    {
+      "method": "POST",
+      "path": "/scan",
+      "function": "rakshak-scan-inference",
+      "team": "none",
+      "status": "orphaned",
+      "response_example": null,
+      "errors": [],
+      "notes": "Function is orphaned (old ml-layer v7, no numpy/xgboost parity with the current model) per backend/lambdas/_legacy/README.md. Route is live in API Gateway but no frontend calls it. Do not build against this."
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/{proxy+}",
+      "function": null,
+      "team": "system",
+      "status": "gateway-internal",
+      "notes": "Auto-generated CORS preflight catch-all, not a content route -- every Lambda's lambda_handler() also short-circuits OPTIONS itself via rc.preflight() as defense in depth. Not part of the 35 declared routes in deploy/routes.py; excluded from any route count a frontend team should reason about."
+    },
+    {
+      "method": "POST",
+      "path": "/score/refresh",
+      "function": "rakshak-score-refresh",
+      "team": "none",
+      "status": "orphaned-undocumented",
+      "response_example": "array of {pincode, safe_score (0..1 float, NOT 0-100), risk_level, confidence, zone, source} -- a DIFFERENT shape from every other prediction route",
+      "notes": "INTEGRATION MISMATCH found during this audit: this route is absent from deploy/routes.py, AWS_RESOURCES.md, and API_REFERENCE.md, yet is live and callable -- confirmed by a real invocation 2026-09-18 (see FRONTEND_INTEGRATION_GUIDE.md summary). It targets the orphaned rakshak-score-refresh Lambda (retired per AWS_RESOURCES.md commit note: the dashboard now polls GET /heatmap/live instead). Response schema uses safe_score as a 0..1 fraction where every other route uses safety_score/safetyScore as 0..100 -- do not build against this route; if it is not deleted, request deletion via the backend team."
+    }
+  ],
+  "status_codes": {
+    "200": "OK",
+    "201": "Created (POST /sos, POST /sos/live only)",
+    "400": "Bad request -- missing/invalid field, out-of-Chennai coordinate, invalid status transition, invalid status value",
+    "404": "Not found -- unknown sos_id/patrol_id/incident_id, or an unserviced pincode",
+    "500": "Unhandled error -- every handler wraps its router in try/except and returns {\"error\": str(e)}, never a raw Lambda crash trace",
+    "_note": "These are the ONLY codes any Lambda handler emits (verified against every lambda_function.py in backend/lambdas/). 409/429/502/503/504 can only originate from API Gateway/Lambda infrastructure itself (throttling, timeout, cold-start failure), never from application code -- see ERROR_HANDLING_GUIDE.md."
+  },
+  "polling_strategy": {
+    "citizen": {
+      "my_active_sos": {
+        "endpoint": "GET /sos/live?user_id=",
+        "interval_ms": 2000,
+        "env_var": "VITE_POLL_SOS_FEED_MS"
+      },
+      "single_incident_eta": {
+        "endpoint": "GET /incident/{id}/eta",
+        "interval_ms": 2000,
+        "env_var": "VITE_POLL_MY_INCIDENT_MS"
+      }
+    },
+    "police": {
+      "active_incidents_feed": {
+        "endpoint": "GET /incidents/active",
+        "interval_ms": 2000,
+        "env_var": "VITE_POLL_SOS_FEED_MS",
+        "verified_impl": "dashboard/src/hooks/useActiveIncidents.js"
+      }
+    },
+    "dashboard": {
+      "patrols": {
+        "endpoint": "GET /dashboard/patrols",
+        "interval_ms": 3000,
+        "env_var": "VITE_POLL_PATROLS_MS",
+        "verified_impl": "dashboard/src/hooks/useLivePatrols.js"
+      },
+      "active_incidents": {
+        "endpoint": "GET /incidents/active",
+        "interval_ms": 2000,
+        "env_var": "VITE_POLL_SOS_FEED_MS",
+        "verified_impl": "dashboard/src/hooks/useActiveIncidents.js"
+      },
+      "snapshot": {
+        "endpoint": "GET /dashboard/snapshot",
+        "interval_ms": 5000,
+        "env_var": "VITE_POLL_DASHBOARD_SNAPSHOT_MS",
+        "verified_impl": "dashboard/src/hooks/useSnapshot.js"
+      },
+      "timeline": {
+        "endpoint": "GET /dashboard/timeline",
+        "interval_ms": 5000,
+        "env_var": null,
+        "verified_impl": "dashboard/src/hooks/useTimeline.js (hardcoded 5000, not env-driven -- inconsistent with the other 4 hooks)"
+      },
+      "heatmap": {
+        "endpoint": "GET /dashboard/heatmap",
+        "interval_ms": 10000,
+        "env_var": "VITE_POLL_HEATMAP_MS",
+        "verified_impl": "dashboard/src/hooks/useRiskData.js"
+      },
+      "single_zone_prediction": {
+        "endpoint": "GET /prediction/{zone}",
+        "interval_ms": 15000,
+        "env_var": "VITE_POLL_PREDICTION_MS",
+        "verified_impl": "not yet wired to a hook -- env var exists in .env.example but SafetyScorePanel's data source was not confirmed to poll on this cadence"
+      }
+    },
+    "no_websockets": true,
+    "marker_animation_ms": {
+      "env_var": "VITE_MARKER_LERP_MS",
+      "value": 3000,
+      "notes": "Client-side lerp duration for smoothing patrol marker movement between polls -- not a server capability."
+    }
+  },
+  "state_management": {
+    "flutter": {
+      "library": "flutter_riverpod ^2.5.1",
+      "already_in_use": true,
+      "evidence": "citizen-app/pubspec.yaml, police-app/pubspec.yaml both declare it under '# State Management'",
+      "navigation": "go_router ^13.2.0",
+      "http_client": "dio ^5.4.0 (+ http ^1.2.0)"
+    },
+    "react": {
+      "library": "React Context + custom hooks (useState/useRef)",
+      "already_in_use": true,
+      "evidence": "dashboard/src/hooks/*.js -- no Redux/Zustand/Context library dependency exists in any of dashboard/, apps/citizen-web/, apps/police-web/ package.json",
+      "http_client_inconsistency": "dashboard/src/hooks use native fetch(); apps/citizen-web and apps/police-web use axios -- pick one per FRONTEND_INTEGRATION_GUIDE.md"
+    }
+  },
+  "known_field_inconsistencies": [
+    "Prediction routes (GET /prediction/{zone}, POST /predict, GET /prediction/zone/{zoneId}) return camelCase safetyScore/riskLevel; heatmap/snapshot routes return snake_case safety_score/risk_level. Both are intentional, source-confirmed, and permanent -- see rakshak-dashboard/lambda_function.py _prediction() vs _zone_scores().",
+    "Incidents carry BOTH lat/lng and latitude/longitude (same values, dual spelling) -- citizen app and dashboard historically used different ones. Read either; prefer latitude/longitude in new code.",
+    "zone_name on an incident/patrol is sometimes just the raw pincode string (e.g. patrol P008's zone_name is '600023', not a real area name) when the pincode isn't in rakshak_common.ZONE_NAMES. Frontends must fall back to a local pincode->name map, same as dashboard/src/hooks/useActiveIncidents.js's PINCODE_NAME table.",
+    "Timeline/incident event objects are {type, ts, detail, patrol_id?, pincode?} -- DATABASE_SCHEMA.md's prose describes {type, message, timestamp, patrol_id} which does not match the live shape or the make_event() source. Use ts/detail.",
+    "PATCH .../status, .../resolve, and POST /sos/dispatch/{id} all return a PARTIAL object (sos_id, status, assigned_patrol_id[, eta_seconds]), never the full incident. Frontends must refetch GET /incident/{id} after any mutation to refresh events[]/patrol_position/etc.",
+    "distance_m only appears on a patrol view when status is Responding (en route to a scene); it is absent/null otherwise. battery and network on an incident are caller-supplied optionals, frequently null.",
+    "POST /score/refresh (undocumented, orphaned) uses safe_score as a 0..1 fraction, unlike every other route's 0..100 safetyScore/safety_score. Do not consume this route."
+  ],
+  "orphaned_do_not_build_against": [
+    "POST /scan (rakshak-scan-inference)",
+    "POST /score/refresh (rakshak-score-refresh)"
+  ]
+}
