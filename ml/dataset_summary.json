@@ -1,0 +1,29 @@
+{
+  "total_signals": 15000,
+  "city": "Chennai",
+  "areas_covered": 20,
+  "features": [
+    "pincode",
+    "area",
+    "neighborhood",
+    "latitude",
+    "longitude",
+    "occurrence_time",
+    "report_time",
+    "authority_arrival_time",
+    "hour",
+    "day_of_week",
+    "is_weekend",
+    "is_night",
+    "is_evening",
+    "is_rush_hour",
+    "reporting_delay_minutes",
+    "response_time_minutes",
+    "total_resolution_time_minutes",
+    "victim_age",
+    "signal_count_last_7d",
+    "signal_count_last_30d",
+    "signal_density_ratio",
+    "risk_level"
+  ]
+}
