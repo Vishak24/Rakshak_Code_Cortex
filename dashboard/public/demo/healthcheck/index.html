@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RAKSHAK — Demo Health Check</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0A0E1A; color: #f0f6fc;
+         font: 14px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; padding: 32px; }
+  h1 { font-size: 20px; letter-spacing: 2px; margin: 0 0 4px; color: #00d4b4; }
+  .sub { color: #8b949e; margin-bottom: 24px; }
+  table { border-collapse: collapse; width: 100%; max-width: 780px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid #21262d; }
+  th { color: #8b949e; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+  .pass { color: #3fb950; font-weight: 700; }
+  .fail { color: #f85149; font-weight: 700; }
+  .pending { color: #d29922; }
+  code { color: #79c0ff; font-size: 12px; }
+  #summary { margin-top: 24px; font-size: 16px; font-weight: 700; }
+  button { margin-top: 20px; background: #00d4b4; color: #05231f; border: 0;
+           padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h1>RAKSHAK DEMO HEALTH CHECK</h1>
+  <div class="sub">Backend: <code id="api"></code></div>
+  <table>
+    <thead><tr><th>Check</th><th>Detail</th><th>Status</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div id="summary" class="pending">Running…</div>
+  <button onclick="run()">Re-run</button>
+
+<script>
+const API = (window.__API__ || 'https://aksdwfbnn5.execute-api.ap-south-1.amazonaws.com').replace(/\/$/, '');
+document.getElementById('api').textContent = API;
+
+const CHECKS = [
+  { name: 'API Gateway reachable',   path: '/patrols',            test: d => Array.isArray(d), detail: d => `HTTP 200, array len ${Array.isArray(d) ? d.length : '?'}` },
+  { name: '20 patrols loaded',       path: '/patrols',            test: d => Array.isArray(d) && d.length === 20, detail: d => `${Array.isArray(d) ? d.length : 0} patrols` },
+  { name: 'Patrol simulation active',path: '/patrols',            test: d => Array.isArray(d) && d.some(p => p.lat ?? p.latitude ?? (p.position && p.position.lat)), detail: d => 'units report live positions' },
+  { name: 'SageMaker reachable',     path: '/prediction/zone/600001', test: d => d && typeof d.safetyScore !== 'undefined', detail: d => `source=${d && d.source}` },
+  { name: 'DynamoDB reachable',      path: '/dashboard/snapshot', test: d => d && d.patrols && typeof d.patrols.total === 'number', detail: d => `snapshot @ ${d && d.generated_at}` },
+  { name: 'Heatmap loaded',          path: '/heatmap/live',       test: d => d && (Array.isArray(d) || Array.isArray(d.points) || Array.isArray(d.zones)), detail: d => 'heatmap payload present' },
+  { name: 'Timeline loaded',         path: '/dashboard/timeline', test: d => Array.isArray(d) || (d && Array.isArray(d.events)), detail: d => `${(Array.isArray(d) ? d : (d && d.events) || []).length} events` },
+];
+
+async function run() {
+  const tbody = document.getElementById('rows');
+  const summary = document.getElementById('summary');
+  tbody.innerHTML = '';
+  summary.className = 'pending';
+  summary.textContent = 'Running…';
+  let pass = 0;
+  for (const c of CHECKS) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${c.name}</td><td class="pending">…</td><td class="pending">CHECKING</td>`;
+    tbody.appendChild(tr);
+    try {
+      const res = await fetch(API + c.path, { headers: { 'Accept': 'application/json' } });
+      const data = await res.json();
+      const ok = res.ok && c.test(data);
+      tr.children[1].textContent = c.detail(data);
+      tr.children[1].className = '';
+      tr.children[2].textContent = ok ? 'PASS' : 'FAIL';
+      tr.children[2].className = ok ? 'pass' : 'fail';
+      if (ok) pass++;
+    } catch (e) {
+      tr.children[1].textContent = String(e);
+      tr.children[1].className = 'fail';
+      tr.children[2].textContent = 'FAIL';
+      tr.children[2].className = 'fail';
+    }
+  }
+  const allPass = pass === CHECKS.length;
+  summary.className = allPass ? 'pass' : 'fail';
+  summary.textContent = `${allPass ? 'PASS' : 'FAIL'} — ${pass}/${CHECKS.length} checks passed`;
+}
+run();
+</script>
+</body>
+</html>

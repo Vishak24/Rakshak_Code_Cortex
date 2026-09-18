@@ -1,0 +1,23 @@
+.wrap { position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); flex: 2; min-height: 0; }
+.mapEl { width: 100%; height: 100%; }
+.hdr { position: absolute; top: 10px; left: 12px; z-index: 500; display: flex; align-items: center; gap: 8px; }
+.ttl { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.badge { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: rgba(0,212,180,.1); border: 1px solid rgba(0,212,180,.28); color: var(--accent); }
+.legend { position: absolute; bottom: 10px; left: 10px; z-index: 500; background: rgba(8,13,26,.9); border: 1px solid var(--border2); border-radius: 7px; padding: 9px 12px; }
+.legLbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.legRow { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.legRow:last-child { margin-bottom: 0; }
+.legDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.zonePanel {
+  position: absolute; bottom: 10px; left: 10px; z-index: 501;
+  background: rgba(15,22,40,.97); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px; padding: 11px 14px; min-width: 208px;
+}
+.zpHead { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+.zpName { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+.zpRow { display: flex; justify-content: space-between; gap: 16px; font-size: 11px; line-height: 1.9; }
+.zpKey { color: var(--muted); }
+.zpVal { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.zpFooter { margin-top: 8px; display: flex; justify-content: flex-end; }
+.zpDismiss { font-size: 10px; font-weight: 600; padding: 4px 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 4px; cursor: pointer; color: var(--muted); font-family: inherit; transition: color .15s, border-color .15s; }
+.zpDismiss:hover { color: var(--text); border-color: rgba(255,255,255,.25); }

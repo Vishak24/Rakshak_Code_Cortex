@@ -1,0 +1,607 @@
+{
+  "unit_count": 20,
+  "coordinate_order": "[lat, lng]",
+  "loop": "closed (first==last)",
+  "units": [
+    {
+      "patrol_id": "P001",
+      "name": "Unit Alpha",
+      "vehicle": "TN01-PCR-01",
+      "officer": "Insp. Ravi Kumar",
+      "home_pincode": "600003",
+      "home_zone": "Park Town",
+      "waypoints": [
+        [
+          13.0827,
+          80.2707
+        ],
+        [
+          13.085,
+          80.275
+        ],
+        [
+          13.09,
+          80.278
+        ],
+        [
+          13.087,
+          80.272
+        ],
+        [
+          13.0827,
+          80.2707
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P002",
+      "name": "Unit Bravo",
+      "vehicle": "TN01-PCR-02",
+      "officer": "Insp. Priya Nair",
+      "home_pincode": "600006",
+      "home_zone": "Nungambakkam",
+      "waypoints": [
+        [
+          13.06,
+          80.25
+        ],
+        [
+          13.065,
+          80.255
+        ],
+        [
+          13.07,
+          80.252
+        ],
+        [
+          13.064,
+          80.247
+        ],
+        [
+          13.06,
+          80.25
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P003",
+      "name": "Unit Charlie",
+      "vehicle": "TN01-PCR-03",
+      "officer": "SI Arun Selvam",
+      "home_pincode": "600001",
+      "home_zone": "Parrys",
+      "waypoints": [
+        [
+          13.1,
+          80.29
+        ],
+        [
+          13.105,
+          80.295
+        ],
+        [
+          13.11,
+          80.292
+        ],
+        [
+          13.104,
+          80.287
+        ],
+        [
+          13.1,
+          80.29
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P004",
+      "name": "Unit Delta",
+      "vehicle": "TN01-PCR-04",
+      "officer": "SI Meena Kumari",
+      "home_pincode": "600017",
+      "home_zone": "T. Nagar",
+      "waypoints": [
+        [
+          13.04,
+          80.23
+        ],
+        [
+          13.045,
+          80.235
+        ],
+        [
+          13.05,
+          80.232
+        ],
+        [
+          13.044,
+          80.227
+        ],
+        [
+          13.04,
+          80.23
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P005",
+      "name": "Unit Echo",
+      "vehicle": "TN01-PCR-05",
+      "officer": "SI Karthik R",
+      "home_pincode": "600008",
+      "home_zone": "Egmore",
+      "waypoints": [
+        [
+          13.075,
+          80.26
+        ],
+        [
+          13.08,
+          80.265
+        ],
+        [
+          13.082,
+          80.261
+        ],
+        [
+          13.077,
+          80.257
+        ],
+        [
+          13.075,
+          80.26
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P006",
+      "name": "Unit Foxtrot",
+      "vehicle": "TN01-PCR-06",
+      "officer": "SI Divya S",
+      "home_pincode": "600021",
+      "home_zone": "Kodungaiyur",
+      "waypoints": [
+        [
+          13.12,
+          80.28
+        ],
+        [
+          13.125,
+          80.285
+        ],
+        [
+          13.128,
+          80.282
+        ],
+        [
+          13.122,
+          80.277
+        ],
+        [
+          13.12,
+          80.28
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P007",
+      "name": "Unit Golf",
+      "vehicle": "TN01-PCR-07",
+      "officer": "SI Prakash M",
+      "home_pincode": "600083",
+      "home_zone": "Ashok Nagar",
+      "waypoints": [
+        [
+          13.03,
+          80.21
+        ],
+        [
+          13.035,
+          80.215
+        ],
+        [
+          13.038,
+          80.212
+        ],
+        [
+          13.032,
+          80.207
+        ],
+        [
+          13.03,
+          80.21
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P008",
+      "name": "Unit Hotel",
+      "vehicle": "TN01-PCR-08",
+      "officer": "SI Lakshmi V",
+      "home_pincode": "600023",
+      "home_zone": "600023",
+      "waypoints": [
+        [
+          13.095,
+          80.24
+        ],
+        [
+          13.1,
+          80.245
+        ],
+        [
+          13.102,
+          80.242
+        ],
+        [
+          13.096,
+          80.237
+        ],
+        [
+          13.095,
+          80.24
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P009",
+      "name": "Unit India",
+      "vehicle": "TN01-PCR-09",
+      "officer": "SI Suresh B",
+      "home_pincode": "600014",
+      "home_zone": "Royapettah",
+      "waypoints": [
+        [
+          13.05,
+          80.27
+        ],
+        [
+          13.055,
+          80.275
+        ],
+        [
+          13.058,
+          80.272
+        ],
+        [
+          13.052,
+          80.267
+        ],
+        [
+          13.05,
+          80.27
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P010",
+      "name": "Unit Juliet",
+      "vehicle": "TN01-PCR-10",
+      "officer": "SI Anitha J",
+      "home_pincode": "600030",
+      "home_zone": "600030",
+      "waypoints": [
+        [
+          13.07,
+          80.22
+        ],
+        [
+          13.075,
+          80.225
+        ],
+        [
+          13.078,
+          80.222
+        ],
+        [
+          13.072,
+          80.217
+        ],
+        [
+          13.07,
+          80.22
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P011",
+      "name": "Unit Kilo",
+      "vehicle": "TN01-PCR-11",
+      "officer": "SI Vikram A",
+      "home_pincode": "600032",
+      "home_zone": "Guindy",
+      "waypoints": [
+        [
+          13.01,
+          80.21
+        ],
+        [
+          13.015,
+          80.215
+        ],
+        [
+          13.018,
+          80.212
+        ],
+        [
+          13.012,
+          80.207
+        ],
+        [
+          13.01,
+          80.21
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P012",
+      "name": "Unit Lima",
+      "vehicle": "TN01-PCR-12",
+      "officer": "SI Deepa N",
+      "home_pincode": "600085",
+      "home_zone": "600085",
+      "waypoints": [
+        [
+          13.02,
+          80.24
+        ],
+        [
+          13.025,
+          80.245
+        ],
+        [
+          13.028,
+          80.242
+        ],
+        [
+          13.022,
+          80.237
+        ],
+        [
+          13.02,
+          80.24
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P013",
+      "name": "Unit Mike",
+      "vehicle": "TN01-PCR-13",
+      "officer": "SI Gopal K",
+      "home_pincode": "600040",
+      "home_zone": "Anna Nagar West",
+      "waypoints": [
+        [
+          13.09,
+          80.21
+        ],
+        [
+          13.095,
+          80.215
+        ],
+        [
+          13.098,
+          80.212
+        ],
+        [
+          13.092,
+          80.207
+        ],
+        [
+          13.09,
+          80.21
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P014",
+      "name": "Unit November",
+      "vehicle": "TN01-PCR-14",
+      "officer": "SI Rekha P",
+      "home_pincode": "600010",
+      "home_zone": "Kilpauk",
+      "waypoints": [
+        [
+          13.11,
+          80.21
+        ],
+        [
+          13.115,
+          80.215
+        ],
+        [
+          13.118,
+          80.212
+        ],
+        [
+          13.112,
+          80.207
+        ],
+        [
+          13.11,
+          80.21
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P015",
+      "name": "Unit Oscar",
+      "vehicle": "TN01-PCR-15",
+      "officer": "SI Manoj T",
+      "home_pincode": "600005",
+      "home_zone": "Triplicane",
+      "waypoints": [
+        [
+          13.065,
+          80.28
+        ],
+        [
+          13.07,
+          80.285
+        ],
+        [
+          13.073,
+          80.282
+        ],
+        [
+          13.067,
+          80.277
+        ],
+        [
+          13.065,
+          80.28
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P016",
+      "name": "Unit Papa",
+      "vehicle": "TN01-PCR-16",
+      "officer": "SI Sangeetha L",
+      "home_pincode": "600004",
+      "home_zone": "Mylapore",
+      "waypoints": [
+        [
+          13.035,
+          80.26
+        ],
+        [
+          13.04,
+          80.265
+        ],
+        [
+          13.043,
+          80.262
+        ],
+        [
+          13.037,
+          80.257
+        ],
+        [
+          13.035,
+          80.26
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P017",
+      "name": "Unit Quebec",
+      "vehicle": "TN01-PCR-17",
+      "officer": "SI Bala S",
+      "home_pincode": "600008",
+      "home_zone": "Egmore",
+      "waypoints": [
+        [
+          13.13,
+          80.26
+        ],
+        [
+          13.135,
+          80.265
+        ],
+        [
+          13.138,
+          80.262
+        ],
+        [
+          13.132,
+          80.257
+        ],
+        [
+          13.13,
+          80.26
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P018",
+      "name": "Unit Romeo",
+      "vehicle": "TN01-PCR-18",
+      "officer": "SI Nisha R",
+      "home_pincode": "600042",
+      "home_zone": "Velachery",
+      "waypoints": [
+        [
+          12.99,
+          80.22
+        ],
+        [
+          12.995,
+          80.225
+        ],
+        [
+          12.998,
+          80.222
+        ],
+        [
+          12.992,
+          80.217
+        ],
+        [
+          12.99,
+          80.22
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P019",
+      "name": "Unit Sierra",
+      "vehicle": "TN01-PCR-19",
+      "officer": "SI Hari V",
+      "home_pincode": "600040",
+      "home_zone": "Anna Nagar West",
+      "waypoints": [
+        [
+          13.08,
+          80.21
+        ],
+        [
+          13.085,
+          80.215
+        ],
+        [
+          13.088,
+          80.212
+        ],
+        [
+          13.082,
+          80.207
+        ],
+        [
+          13.08,
+          80.21
+        ]
+      ]
+    },
+    {
+      "patrol_id": "P020",
+      "name": "Unit Tango",
+      "vehicle": "TN01-PCR-20",
+      "officer": "SI Uma D",
+      "home_pincode": "600005",
+      "home_zone": "Triplicane",
+      "waypoints": [
+        [
+          13.045,
+          80.29
+        ],
+        [
+          13.05,
+          80.295
+        ],
+        [
+          13.053,
+          80.292
+        ],
+        [
+          13.047,
+          80.287
+        ],
+        [
+          13.045,
+          80.29
+        ]
+      ]
+    }
+  ]
+}

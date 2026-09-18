@@ -1,0 +1,17 @@
+.row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; flex-shrink: 0; }
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 13px 15px; display: flex; align-items: center; gap: 13px;
+  transition: border-color .18s;
+}
+.card:hover { border-color: var(--border2); }
+.ico { width: 36px; height: 36px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ico svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ico.d { background: rgba(255,59,92,.1); color: var(--danger); }
+.ico.w { background: rgba(245,158,11,.1); color: var(--warning); }
+.ico.s { background: rgba(34,197,94,.1); color: var(--safe); }
+.val { font-size: 24px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.val.d { color: var(--danger); }
+.val.w { color: var(--warning); }
+.val.s { color: var(--safe); }
+.lbl { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 4px; letter-spacing: .2px; }

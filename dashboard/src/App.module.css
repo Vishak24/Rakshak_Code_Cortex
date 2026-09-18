@@ -1,0 +1,21 @@
+.app { display: grid; grid-template-columns: 200px 1fr 300px; height: 100vh; overflow: hidden; }
+.appReports { display: grid; grid-template-columns: 200px 1fr; height: 100vh; overflow: hidden; }
+.main { display: flex; flex-direction: column; padding: 12px; gap: 10px; overflow: hidden; background: var(--bg); }
+.errorBanner { background: rgba(255,59,92,.12); border: 1px solid rgba(255,59,92,.3); border-radius: 6px; padding: 8px 12px; font-size: 12px; color: var(--danger); flex-shrink: 0; }
+/* Zone safety · patrol roster · incident timeline — one row, three panels */
+.chartsRow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex-shrink: 0; height: 210px; }
+.chartCard { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; display: flex; flex-direction: column; overflow: hidden; }
+.chartHdr { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-shrink: 0; }
+.chartBar { width: 3px; height: 11px; border-radius: 2px; flex-shrink: 0; }
+.chartTtl { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.overviewBody { flex: 1; overflow-y: auto; }
+.ovTable { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ovTable th { color: var(--dim); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 6px; text-align: left; border-bottom: 1px solid var(--border); }
+.ovTable td { padding: 5px 6px; color: var(--muted); border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+.ovTable tr:last-child td { border-bottom: none; }
+.patrolBody { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 6px 0; }
+.patrolStat { display: flex; align-items: center; gap: 12px; }
+.psVal { font-size: 28px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; min-width: 40px; }
+.psLbl { font-size: 13px; color: var(--muted); font-weight: 500; }
+.rightCol { display: flex; flex-direction: column; overflow: hidden; }
+.rightCol > :last-child { flex: 1; overflow: hidden; }

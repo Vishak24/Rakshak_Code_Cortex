@@ -1,0 +1,153 @@
+.panel {
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 12px 14px 14px;
+  flex-shrink: 0;
+}
+
+.hdr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.bar {
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--text);
+  flex: 1;
+}
+
+.badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border2);
+}
+
+.badgeLive {
+  color: var(--accent);
+  background: rgba(0, 212, 180, 0.10);
+  border-color: rgba(0, 212, 180, 0.35);
+}
+
+.empty,
+.error {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 14px 0;
+  text-align: center;
+}
+
+.error { color: var(--danger); }
+
+/* ── Score hero ─────────────────────────────────────────────────────────── */
+.scoreRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.score {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.outOf {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dim);
+}
+
+.scoreLbl {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+}
+
+/* ── Detail rows ────────────────────────────────────────────────────────── */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.key {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.valMono {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ── Meter ──────────────────────────────────────────────────────────────── */
+.meter {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+.foot {
+  margin-top: 7px;
+  font-size: 9.5px;
+  color: var(--dim);
+  letter-spacing: 0.2px;
+}
+
+.stale { color: var(--warning); }

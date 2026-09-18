@@ -1,0 +1,336 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  padding: 12px;
+  gap: 10px;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar {
+  width: 3px;
+  height: 13px;
+  border-radius: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.addBtn {
+  background: var(--accent);
+  color: #080D1A;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: opacity 0.15s;
+}
+.addBtn:hover { opacity: 0.85; }
+
+/* ── Summary bar ─────────────────────────────────────────────────────────── */
+.summaryBar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 7px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sumItem b { font-weight: 700; color: var(--text); }
+.sumPending  b { color: #f59e0b; }
+.sumApproved b { color: #22c55e; }
+.sumRejected b { color: #ef4444; }
+
+/* ── Table wrapper — horizontal scroll ───────────────────────────────────── */
+.tableWrap {
+  flex: 1;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+  font-size: 12px;
+}
+
+.table thead tr {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.table th {
+  background: var(--surface2);
+  color: var(--dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  padding: 9px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+}
+
+.table td {
+  background: var(--surface);
+  color: var(--muted);
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: var(--surface2); }
+
+/* ── Row approval glow ───────────────────────────────────────────────────── */
+.dataRow.rowApproved td:first-child {
+  box-shadow: inset 3px 0 0 #22c55e;
+}
+.dataRow.rowRejected td:first-child {
+  box-shadow: inset 3px 0 0 #ef4444;
+}
+.dataRow.rowRejected td {
+  opacity: 0.6;
+}
+
+/* ── New incident flash ───────────────────────────────────────────────────── */
+@keyframes row-flash {
+  0%   { background: rgba(245,158,11,0.22); }
+  100% { background: transparent; }
+}
+.dataRow.rowFlash td {
+  animation: row-flash 2s ease-out forwards;
+}
+
+/* ── Sticky first column ─────────────────────────────────────────────────── */
+.stickyTh,
+.stickyTd {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.stickyTh {
+  z-index: 4;
+  background: var(--surface2);
+}
+
+.stickyTd {
+  background: var(--surface);
+  border-right: 1px solid var(--border2);
+}
+
+.table tr:hover .stickyTd { background: var(--surface2); }
+
+/* ── Cell ────────────────────────────────────────────────────────────────── */
+.cell {
+  cursor: pointer;
+  min-width: 110px;
+  max-width: 160px;
+}
+
+.cellReadOnly {
+  cursor: default;
+}
+
+.cell:hover .cellText { color: var(--text); }
+
+.cellText {
+  display: block;
+  padding: 7px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.1s;
+}
+
+.cellInput {
+  width: 100%;
+  background: rgba(0, 212, 180, 0.08);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  color: var(--text);
+  font-size: 12px;
+  font-family: inherit;
+  padding: 6px 10px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.cellSelect {
+  width: 100%;
+  background: rgba(0, 212, 180, 0.08);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  color: var(--text);
+  font-size: 12px;
+  font-family: inherit;
+  padding: 5px 8px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* ── Status column ───────────────────────────────────────────────────────── */
+.statusTh {
+  position: sticky;
+  right: 120px;
+  z-index: 4;
+  background: var(--surface2);
+  text-align: center;
+  min-width: 100px;
+}
+
+.statusTd {
+  position: sticky;
+  right: 120px;
+  z-index: 2;
+  background: var(--surface);
+  text-align: center;
+  padding: 6px 8px;
+  border-left: 1px solid var(--border);
+}
+
+.table tr:hover .statusTd { background: var(--surface2); }
+
+.badgePending {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(245,158,11,.12);
+  border: 1px solid rgba(245,158,11,.3);
+  color: #f59e0b;
+  white-space: nowrap;
+}
+
+.badgeApproved {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(34,197,94,.12);
+  border: 1px solid rgba(34,197,94,.3);
+  color: #22c55e;
+  white-space: nowrap;
+}
+
+.badgeRejected {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(239,68,68,.12);
+  border: 1px solid rgba(239,68,68,.3);
+  color: #ef4444;
+  white-space: nowrap;
+}
+
+/* ── Action column ───────────────────────────────────────────────────────── */
+.actionTh {
+  position: sticky;
+  right: 0;
+  z-index: 4;
+  background: var(--surface2);
+  text-align: center;
+  min-width: 120px;
+}
+
+.actionTd {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: var(--surface);
+  text-align: center;
+  padding: 5px 8px;
+  border-left: 1px solid var(--border2);
+}
+
+.table tr:hover .actionTd { background: var(--surface2); }
+
+.actionGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* Base button style */
+.btnSubmit,
+.btnApprove,
+.btnReject {
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 9px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btnSubmit:disabled,
+.btnApprove:disabled,
+.btnReject:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.btnSubmit {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+}
+.btnSubmit:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btnApprove {
+  background: rgba(34,197,94,.1);
+  border: 1px solid rgba(34,197,94,.35);
+  color: #22c55e;
+}
+.btnApprove:hover:not(:disabled) { background: rgba(34,197,94,.2); }
+
+.btnReject {
+  background: rgba(239,68,68,.1);
+  border: 1px solid rgba(239,68,68,.35);
+  color: #ef4444;
+}
+.btnReject:hover:not(:disabled) { background: rgba(239,68,68,.2); }
