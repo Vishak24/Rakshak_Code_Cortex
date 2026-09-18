@@ -19,7 +19,6 @@ police-app/build/
 citizen-app/.dart_tool/
 police-app/.dart_tool/
 **/.dart_tool/
-*/build/
 
 # ML scratch
 ml/venv/
